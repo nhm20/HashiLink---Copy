@@ -7,10 +7,28 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".SplashScreen">
+
     <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="App Logo"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/splash" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="TODO"
-        android:src="@drawable/splash" />
+        android:text="HashiLink"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connecting Consumers and  Buyers"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"/>
 
 </LinearLayout>

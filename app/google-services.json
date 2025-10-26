@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "985718621323",
+    "firebase_url": "https://hashilink-75f5e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "hashilink-75f5e",
+    "storage_bucket": "hashilink-75f5e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985718621323:android:350ac08d02b4567414008e",
+        "android_client_info": {
+          "package_name": "com.example.hashilink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8M0HqUov5z6X_AX5oE9FDIdDFbIa_wLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
