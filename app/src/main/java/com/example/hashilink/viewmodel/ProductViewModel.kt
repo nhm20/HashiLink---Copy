@@ -52,6 +52,21 @@ class ProductViewModel : ViewModel() {
         }
     }
 
+    // New: Method to load all products
+    fun loadAllProducts() {
+        _loading.value = true
+        viewModelScope.launch {
+            val result = repository.getAllProducts()
+            if (result.isSuccess) {
+                _products.postValue(result.getOrNull() ?: emptyList())
+                _error.postValue(null)
+            } else {
+                _error.postValue(result.exceptionOrNull()?.message ?: "Failed to load products")
+            }
+            _loading.postValue(false)
+        }
+    }
+
     // Helper for UI to clear the add result after handling
     fun clearAddResult() {
         _addResult.value = null

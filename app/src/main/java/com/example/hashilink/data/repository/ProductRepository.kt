@@ -4,7 +4,6 @@ import com.example.hashilink.data.model.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class ProductRepository private constructor() {
@@ -48,6 +47,28 @@ class ProductRepository private constructor() {
         suspendCoroutine { cont ->
             val query = productsRef.orderByChild("sellerId").equalTo(sellerId)
             query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try {
+                        val list = mutableListOf<Product>()
+                        for (child in snapshot.children) {
+                            val p = child.getValue(Product::class.java)
+                            if (p != null) list.add(p)
+                        }
+                        cont.resume(Result.success(list))
+                    } catch (e: Exception) {
+                        cont.resume(Result.failure(e))
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    cont.resume(Result.failure(Exception(error.message)))
+                }
+            })
+        }
+
+    suspend fun getAllProducts(): Result<List<Product>> =
+        suspendCoroutine { cont ->
+            productsRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     try {
                         val list = mutableListOf<Product>()
