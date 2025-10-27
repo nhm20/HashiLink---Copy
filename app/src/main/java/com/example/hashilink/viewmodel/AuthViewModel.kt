@@ -18,6 +18,10 @@ class AuthViewModel : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
+
+    private val _userProfile = MutableLiveData<com.example.hashilink.data.model.User?>()
+    val userProfile: LiveData<com.example.hashilink.data.model.User?> = _userProfile
+
     fun login(email: String, password: String) {
         _loading.value = true
         viewModelScope.launch {
@@ -41,5 +45,19 @@ class AuthViewModel : ViewModel() {
     fun logout() {
         repository.logout()
         _userRole.value = null
+        _userProfile.value = null
+    }
+
+    fun getUserProfile(uid: String) {
+        _loading.value = true
+        viewModelScope.launch {
+            val result = repository.getUserProfile(uid)
+            if (result.isSuccess) {
+                _userProfile.postValue(result.getOrNull())
+            } else {
+                _userProfile.postValue(null)
+            }
+            _loading.postValue(false)
+        }
     }
 }
