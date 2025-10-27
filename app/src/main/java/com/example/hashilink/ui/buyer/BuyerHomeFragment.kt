@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.hashilink.R
+import com.example.hashilink.data.model.Product
+import com.example.hashilink.ui.buyer.ProductDetailsFragment
 
 class BuyerHomeFragment : Fragment() {
 
@@ -46,6 +48,11 @@ class BuyerHomeFragment : Fragment() {
     private fun loadFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.buyer_fragment_container, fragment)
+            .addToBackStack(null)
             .commit()
+    }
+
+    fun onProductClick(product: Product) {
+        loadFragment(ProductDetailsFragment.newInstance(product))
     }
 }

@@ -12,6 +12,8 @@ import com.example.hashilink.data.model.Product
 
 class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
+    var onItemClick: ((Product) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         return ProductViewHolder(view)
@@ -21,7 +23,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
         holder.bind(getItem(position))
     }
 
-    class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvProductName = itemView.findViewById<TextView>(R.id.tvProductName)
         private val tvProductPrice = itemView.findViewById<TextView>(R.id.tvProductPrice)
         private val tvProductQuantity = itemView.findViewById<TextView>(R.id.tvProductQuantity)
@@ -30,6 +32,9 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
             tvProductName.text = product.name
             tvProductPrice.text = "₹${product.price}"
             tvProductQuantity.text = "Qty: ${product.quantity}"
+            itemView.setOnClickListener {
+                onItemClick?.invoke(product)
+            }
         }
     }
 

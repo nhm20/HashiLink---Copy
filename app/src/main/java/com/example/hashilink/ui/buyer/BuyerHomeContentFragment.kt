@@ -34,6 +34,10 @@ class BuyerHomeContentFragment : Fragment() {
         val adapter = ProductAdapter()
         recyclerView.adapter = adapter
 
+        adapter.onItemClick = { product ->
+            (parentFragment as? BuyerHomeFragment)?.onProductClick(product)
+        }
+
         val productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
         var allProducts: List<Product> = emptyList()
         productViewModel.products.observe(viewLifecycleOwner) { products ->

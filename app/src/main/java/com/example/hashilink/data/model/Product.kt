@@ -1,5 +1,9 @@
 package com.example.hashilink.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Product(
     val productId: String = "",
     val name: String = "",
@@ -7,4 +11,4 @@ data class Product(
     val price: Double = 0.0,
     val quantity: Int = 0,
     val sellerId: String = ""
-)
+) : Parcelable
