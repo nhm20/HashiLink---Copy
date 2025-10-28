@@ -3,4 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="product_not_found">Product not found</string>
+    <string name="product_price">₹%1$.2f</string>
+    <string name="product_quantity">Available Quantity: %1$d</string>
+    <string name="seller_id">Seller ID: %1$s</string>
+    <string name="chat_with_seller">Chat with Seller: %1$s</string>
+    <string name="message_format">%1$s: %2$s</string>
 </resources>

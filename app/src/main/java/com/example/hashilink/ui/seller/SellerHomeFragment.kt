@@ -33,6 +33,10 @@ class SellerHomeFragment : Fragment() {
                     loadChildFragment(MyProductsFragment())
                     true
                 }
+                R.id.nav_seller_chat -> {
+                    loadChildFragment(SellerChatHistoryFragment())
+                    true
+                }
                 R.id.nav_seller_profile -> {
                     loadChildFragment(SellerProfileFragment())
                     true
@@ -42,7 +46,8 @@ class SellerHomeFragment : Fragment() {
         }
         return view
     }
-    private fun loadChildFragment(fragment: Fragment) {
+    
+    fun loadChildFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.sellerFragmentContainer, fragment)
             .commit()

@@ -31,6 +31,11 @@ class BuyerHomeFragment : Fragment() {
                     loadFragment(BuyerHomeContentFragment())
                     true
                 }
+                R.id.nav_chat -> {
+                    // Load Chat history fragment
+                    loadFragment(ChatHistoryFragment())
+                    true
+                }
                 R.id.nav_orders -> {
                     // TODO: Load Orders fragment
                     true
@@ -45,7 +50,7 @@ class BuyerHomeFragment : Fragment() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    fun loadFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.buyer_fragment_container, fragment)
             .addToBackStack(null)

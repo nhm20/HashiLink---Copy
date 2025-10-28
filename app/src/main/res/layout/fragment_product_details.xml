@@ -63,6 +63,15 @@
             android:text="Buy Now"
             app:cornerRadius="8dp" />
 
+        <!-- Chat Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Chat with Seller"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@android:color/darker_gray" />
     </LinearLayout>
 
 </ScrollView>

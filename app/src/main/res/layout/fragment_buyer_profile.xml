@@ -103,6 +103,18 @@
             android:text="Edit Profile"
             app:cornerRadius="8dp" />
 
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Logout"
+            android:backgroundTint="@android:color/holo_red_dark"
+            app:cornerRadius="8dp"
+            app:icon="@android:drawable/ic_lock_power_off"
+            app:iconGravity="textStart" />
+
     </LinearLayout>
 
 </ScrollView>
