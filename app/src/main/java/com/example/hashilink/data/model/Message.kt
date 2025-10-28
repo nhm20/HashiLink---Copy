@@ -6,5 +6,6 @@ data class Message(
     val receiverId: String = "",
     val text: String = "",
     val timestamp: Long = System.currentTimeMillis(),
-    val isRead: Boolean = false
+    val isRead: Boolean = false,
+    val isAI: Boolean = false  // Flag to identify AI-generated messages
 )

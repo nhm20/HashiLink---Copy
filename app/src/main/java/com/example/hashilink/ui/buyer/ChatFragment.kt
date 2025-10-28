@@ -9,13 +9,16 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hashilink.R
 import com.example.hashilink.data.model.Message
+import com.example.hashilink.ai.FirebaseAIChatHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +31,10 @@ class ChatFragment : Fragment() {
     private val messages = mutableListOf<Message>()
     private lateinit var currentUserId: String
     private val TAG = "ChatFragment"
+    
+    // Firebase AI Helper
+    private val aiHelper = FirebaseAIChatHelper()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + Job())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +77,7 @@ class ChatFragment : Fragment() {
 
         val etMessage = view.findViewById<EditText>(R.id.etMessage)
         val btnSend = view.findViewById<ImageButton>(R.id.btnSend)
+        val btnAskAI = view.findViewById<Button>(R.id.btnAskAI)
 
         btnSend.setOnClickListener {
             val text = etMessage.text.toString().trim()
@@ -78,8 +86,84 @@ class ChatFragment : Fragment() {
                 etMessage.text.clear()
             }
         }
+        
+        btnAskAI.setOnClickListener {
+            val userMessage = etMessage.text.toString().trim()
+            if (userMessage.isNotEmpty()) {
+                askAIAssistant(userMessage)
+                etMessage.text.clear()
+            } else {
+                Toast.makeText(requireContext(), "Type a question for AI", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         loadMessages()
+    }
+    
+    private fun askAIAssistant(userQuestion: String) {
+        // Show loading state
+        Toast.makeText(requireContext(), "Asking AI Assistant...", Toast.LENGTH_SHORT).show()
+        
+        // Get recent chat history for context
+        val recentMessages = messages.takeLast(10).map { "${it.senderId}: ${it.text}" }
+        
+        coroutineScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    aiHelper.getChatResponse(
+                        userMessage = userQuestion,
+                        productContext = "Chat with $otherUserName",
+                        chatHistory = recentMessages
+                    )
+                }
+                
+                result.onSuccess { aiResponse ->
+                    // Add AI message to chat
+                    addAIMessage(aiResponse)
+                }.onFailure { error ->
+                    Log.e(TAG, "AI error: ${error.message}", error)
+                    val errorMsg = when {
+                        error.message?.contains("permission", ignoreCase = true) == true -> 
+                            "Please enable Vertex AI in Firebase Console"
+                        error.message?.contains("quota", ignoreCase = true) == true -> 
+                            "API quota exceeded. Please try again later."
+                        else -> "AI Assistant is temporarily unavailable: ${error.message}"
+                    }
+                    Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "AI request failed", e)
+                Toast.makeText(requireContext(), "Failed to get AI response", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    
+    private fun addAIMessage(aiText: String) {
+        val chatRoomId = getChatRoomId(currentUserId, otherUserId)
+        val database = FirebaseDatabase.getInstance()
+        val messagesRef = database.getReference("chats")
+            .child(chatRoomId)
+            .child("messages")
+
+        val messageId = messagesRef.push().key ?: return
+        
+        val aiMessage = Message(
+            messageId = messageId,
+            senderId = "AI_ASSISTANT",
+            receiverId = currentUserId,
+            text = aiText,
+            timestamp = System.currentTimeMillis(),
+            isRead = true,
+            isAI = true
+        )
+
+        messagesRef.child(messageId).setValue(aiMessage)
+            .addOnSuccessListener {
+                Log.d(TAG, "AI message added successfully")
+            }
+            .addOnFailureListener { ex ->
+                Log.e(TAG, "Failed to add AI message", ex)
+            }
     }
 
     private fun loadMessages() {
@@ -226,38 +310,72 @@ class ChatFragment : Fragment() {
     class MessageAdapter(
         private val messages: List<Message>,
         private val currentUserId: String
-    ) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         private val VIEW_TYPE_SENT = 1
         private val VIEW_TYPE_RECEIVED = 2
+        private val VIEW_TYPE_AI = 3
         private val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
         inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val tvMessage: TextView = itemView.findViewById(R.id.tvMessage)
             val tvTime: TextView = itemView.findViewById(R.id.tvTime)
         }
+        
+        inner class AIMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val tvAIMessage: TextView = itemView.findViewById(R.id.tvAIMessage)
+            val tvAITimestamp: TextView = itemView.findViewById(R.id.tvAITimestamp)
+        }
 
         override fun getItemViewType(position: Int): Int {
             val message = messages[position]
-            return if (message.senderId == currentUserId) VIEW_TYPE_SENT else VIEW_TYPE_RECEIVED
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-            val layoutId = if (viewType == VIEW_TYPE_SENT) {
-                R.layout.item_message_sent
-            } else {
-                R.layout.item_message_received
+            return when {
+                message.isAI -> VIEW_TYPE_AI
+                message.senderId == currentUserId -> VIEW_TYPE_SENT
+                else -> VIEW_TYPE_RECEIVED
             }
-            val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
-            return MessageViewHolder(view)
         }
 
-        override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            return when (viewType) {
+                VIEW_TYPE_AI -> {
+                    val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_message_ai, parent, false)
+                    AIMessageViewHolder(view)
+                }
+                VIEW_TYPE_SENT -> {
+                    val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_message_sent, parent, false)
+                    MessageViewHolder(view)
+                }
+                else -> {
+                    val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_message_received, parent, false)
+                    MessageViewHolder(view)
+                }
+            }
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val message = messages[position]
-            holder.tvMessage.text = message.text
-            holder.tvTime.text = dateFormat.format(Date(message.timestamp))
+            
+            when (holder) {
+                is AIMessageViewHolder -> {
+                    holder.tvAIMessage.text = message.text
+                    holder.tvAITimestamp.text = dateFormat.format(Date(message.timestamp))
+                }
+                is MessageViewHolder -> {
+                    holder.tvMessage.text = message.text
+                    holder.tvTime.text = dateFormat.format(Date(message.timestamp))
+                }
+            }
         }
 
         override fun getItemCount() = messages.size
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineScope.cancel()
     }
 }

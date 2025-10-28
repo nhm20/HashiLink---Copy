@@ -64,10 +64,10 @@ class SellerChatHistoryFragment : Fragment() {
             Toast.makeText(requireContext(), "Please log in to view chat history", Toast.LENGTH_SHORT).show()
             return
         }
-        
+
         val currentUserId = currentUser.uid
         Log.d(TAG, "Loading chat history for seller: $currentUserId")
-        
+
         // Use userChats reference which maps userId -> otherUserId -> chatRoomId
         val userChatsRef = FirebaseDatabase.getInstance()
             .getReference("userChats")
@@ -77,19 +77,19 @@ class SellerChatHistoryFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.d(TAG, "Chat history data received, children count: ${snapshot.childrenCount}")
                 chatList.clear()
-                
+
                 if (!snapshot.exists()) {
                     Log.d(TAG, "No chat history found")
                     adapter.notifyDataSetChanged()
                     return
                 }
-                
+
                 for (child in snapshot.children) {
                     val buyerId = child.key ?: continue
                     val chatRoomId = child.getValue(String::class.java) ?: continue
-                    
+
                     Log.d(TAG, "Found chat with buyer: $buyerId, chatRoomId: $chatRoomId")
-                    
+
                     // Fetch buyer name and last message info
                     fetchBuyerInfo(buyerId, chatRoomId)
                 }
@@ -101,23 +101,22 @@ class SellerChatHistoryFragment : Fragment() {
             }
         })
     }
-
     private fun fetchBuyerInfo(buyerId: String, chatRoomId: String) {
         val database = FirebaseDatabase.getInstance()
-        
+
         // Fetch buyer name
         database.getReference("users").child(buyerId).get()
             .addOnSuccessListener { userSnapshot ->
                 val buyerName = userSnapshot.child("name").getValue(String::class.java) ?: "Buyer"
-                
+
                 // Fetch last message info
                 database.getReference("chats").child(chatRoomId).child("info").get()
                     .addOnSuccessListener { infoSnapshot ->
                         val lastMessage = infoSnapshot.child("lastMessage").getValue(String::class.java) ?: ""
                         val lastMessageTime = infoSnapshot.child("lastMessageTime").getValue(Long::class.java) ?: 0L
-                        
+
                         val chatInfo = ChatInfo(buyerId, buyerName, lastMessage, lastMessageTime)
-                        
+
                         // Check if already exists and update, otherwise add
                         val existingIndex = chatList.indexOfFirst { it.buyerId == buyerId }
                         if (existingIndex != -1) {
@@ -127,7 +126,7 @@ class SellerChatHistoryFragment : Fragment() {
                             chatList.add(chatInfo)
                             adapter.notifyItemInserted(chatList.size - 1)
                         }
-                        
+
                         // Sort by last message time
                         chatList.sortByDescending { it.lastMessageTime }
                         adapter.notifyDataSetChanged()
