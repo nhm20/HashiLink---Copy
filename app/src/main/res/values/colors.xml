@@ -1,8 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#075E54</color>
-    <color name="colorPrimaryDark">#054D44</color>
-    <color name="colorAccent">#25D366</color>
+    
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#BB86FC</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC6</color>
+    
+    <!-- Dark Theme Colors -->
+    <color name="background_dark">#121212</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="surface_variant">#2C2C2C</color>
+    
+    <!-- Accent Colors -->
+    <color name="accent_purple">#BB86FC</color>
+    <color name="accent_teal">#03DAC6</color>
+    <color name="accent_blue">#2196F3</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#E1E1E1</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="text_hint">#757575</color>
+    
+    <!-- Message Colors -->
+    <color name="message_sent_bg">#005C4B</color>
+    <color name="message_received_bg">#1E1E1E</color>
+    <color name="message_ai_bg">#2C2C2C</color>
+    
+    <!-- Additional Colors -->
+    <color name="divider_color">#3A3A3A</color>
+    <color name="error_red">#CF6679</color>
 </resources>
