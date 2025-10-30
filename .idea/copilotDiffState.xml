@@ -11,22 +11,6 @@
             </PendingDiffInfo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/message_received_bg.xml">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/app/src/main/res/drawable/message_received_bg.xml" />
-              <option name="updatedContent" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;&#10;    &lt;solid android:color=&quot;@android:color/white&quot; /&gt;&#10;    &lt;corners android:radius=&quot;12dp&quot; /&gt;&#10;&lt;/shape&gt;" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/message_sent_bg.xml">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/app/src/main/res/drawable/message_sent_bg.xml" />
-              <option name="updatedContent" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;&#10;    &lt;solid android:color=&quot;#007AFF&quot; /&gt;&#10;    &lt;corners android:radius=&quot;12dp&quot; /&gt;&#10;&lt;/shape&gt;" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/drawable/send_button_bg.xml">
           <value>
             <PendingDiffInfo>

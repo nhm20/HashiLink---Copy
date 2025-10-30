@@ -39,11 +39,11 @@ class ProductViewModel : ViewModel() {
     }
 
     // New: addProduct uses the same repository and viewModelScope
-    fun addProduct(name: String, description: String, price: Double, quantity: Int) {
+    fun addProduct(name: String, description: String, price: Double, quantity: Int, imageUrl: String = "") {
         _loading.value = true
         viewModelScope.launch {
             val res = try {
-                repository.addProduct(name, description, price, quantity)
+                repository.addProduct(name, description, price, quantity, imageUrl)
             } catch (e: Exception) {
                 Result.failure<String>(e)
             }

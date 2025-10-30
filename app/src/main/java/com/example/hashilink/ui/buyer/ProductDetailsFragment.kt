@@ -4,9 +4,11 @@ package com.example.hashilink.ui.buyer
     import android.view.LayoutInflater
     import android.view.View
     import android.view.ViewGroup
+    import android.widget.ImageView
     import android.widget.TextView
     import android.widget.Toast
     import androidx.fragment.app.Fragment
+    import com.bumptech.glide.Glide
     import com.example.hashilink.R
     import com.example.hashilink.data.model.Product
     import com.google.android.material.button.MaterialButton
@@ -32,6 +34,8 @@ package com.example.hashilink.ui.buyer
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
+            val ivProductImage = view.findViewById<ImageView>(R.id.ivProductImage)
+            val ivPlaceholder = view.findViewById<ImageView>(R.id.ivPlaceholder)
             val tvProductName = view.findViewById<TextView>(R.id.tvProductName)
             val tvProductDescription = view.findViewById<TextView>(R.id.tvProductDescription)
             val tvProductPrice = view.findViewById<TextView>(R.id.tvProductPrice)
@@ -45,6 +49,21 @@ package com.example.hashilink.ui.buyer
             tvProductPrice.text = getString(R.string.product_price, product.price)
             tvProductQuantity.text = getString(R.string.product_quantity, product.quantity)
             tvSellerId.text = getString(R.string.seller_id, product.sellerId)
+
+            // Load product image
+            if (product.imageUrl.isNotEmpty()) {
+                ivPlaceholder.visibility = View.GONE
+                ivProductImage.visibility = View.VISIBLE
+                Glide.with(this)
+                    .load(product.imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(ivProductImage)
+            } else {
+                ivPlaceholder.visibility = View.VISIBLE
+                ivProductImage.visibility = View.GONE
+            }
 
             btnBuy.setOnClickListener {
                 // TODO: Implement buy functionality

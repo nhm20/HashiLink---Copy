@@ -79,6 +79,85 @@
                     android:textColor="@color/accent_teal"
                     android:layout_marginBottom="20dp"/>
 
+                <!-- Product Image Section -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvProductImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/surface_variant"
+                    app:strokeColor="@color/accent_teal"
+                    app:strokeWidth="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginBottom="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/ivProductImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone"/>
+
+                        <LinearLayout
+                            android:id="@+id/llImagePlaceholder"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="24dp">
+
+                            <ImageView
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:src="@android:drawable/ic_menu_camera"
+                                android:tint="@color/accent_teal"
+                                android:alpha="0.7"
+                                android:layout_marginBottom="12dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tap to add product image"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_secondary"
+                                android:gravity="center"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="(Optional)"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_hint"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnRemoveImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="8dp"
+                            android:visibility="gone"
+                            app:icon="@android:drawable/ic_menu_close_clear_cancel"
+                            app:iconTint="@color/white"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            app:cornerRadius="20dp"
+                            android:backgroundTint="#E53935"
+                            android:insetLeft="0dp"
+                            android:insetTop="0dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            app:elevation="4dp"/>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+
                 <!-- Product Name -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

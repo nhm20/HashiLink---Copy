@@ -3,10 +3,12 @@ package com.example.hashilink.ui.seller
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.hashilink.R
 import com.example.hashilink.data.model.Product
 
@@ -27,11 +29,29 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
         private val tvProductName = itemView.findViewById<TextView>(R.id.tvProductName)
         private val tvProductPrice = itemView.findViewById<TextView>(R.id.tvProductPrice)
         private val tvProductQuantity = itemView.findViewById<TextView>(R.id.tvProductQuantity)
+        private val ivProductImage = itemView.findViewById<ImageView>(R.id.ivProductImage)
+        private val ivPlaceholder = itemView.findViewById<ImageView>(R.id.ivPlaceholder)
 
         fun bind(product: Product) {
             tvProductName.text = product.name
             tvProductPrice.text = "₹${product.price}"
             tvProductQuantity.text = "Qty: ${product.quantity}"
+            
+            // Load product image with Glide
+            if (product.imageUrl.isNotEmpty()) {
+                ivPlaceholder.visibility = View.GONE
+                ivProductImage.visibility = View.VISIBLE
+                Glide.with(itemView.context)
+                    .load(product.imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(ivProductImage)
+            } else {
+                ivPlaceholder.visibility = View.VISIBLE
+                ivProductImage.visibility = View.GONE
+            }
+            
             itemView.setOnClickListener {
                 onItemClick?.invoke(product)
             }
