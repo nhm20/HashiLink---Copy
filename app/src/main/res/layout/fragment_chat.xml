@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_dark">
+    android:background="@color/background_dark"
+    android:fitsSystemWindows="true">
 
     <!-- Chat Header -->
     <com.google.android.material.card.MaterialCardView
@@ -53,16 +54,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="12dp"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
         android:clipToPadding="false"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:overScrollMode="ifContentScrolls"/>
 
     <!-- AI Assistant Banner -->
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvAIBanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
         app:cardBackgroundColor="@color/surface_dark"
@@ -135,6 +142,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         app:cardCornerRadius="0dp"
         app:cardElevation="8dp"
         app:cardBackgroundColor="@color/surface_dark">
@@ -144,7 +152,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp">
+            android:paddingHorizontal="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="12dp">
 
             <!-- Message Input Card -->
             <com.google.android.material.card.MaterialCardView

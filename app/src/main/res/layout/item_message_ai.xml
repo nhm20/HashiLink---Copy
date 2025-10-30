@@ -4,17 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:gravity="start">
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="6dp"
+    android:gravity="center_vertical">
 
     <!-- AI Icon -->
-    <ImageView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@android:drawable/ic_dialog_info"
-        app:tint="#4285F4"
         android:layout_marginEnd="8dp"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/accent_purple">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="AI"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- AI Message Bubble -->
     <LinearLayout
@@ -31,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AI Assistant"
-            android:textSize="10sp"
-            android:textColor="#4285F4"
+            android:textSize="11sp"
+            android:textColor="@color/accent_purple"
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
 
@@ -41,8 +53,8 @@
             android:id="@+id/tvAIMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
             android:lineSpacingExtra="2dp" />
 
         <!-- Timestamp -->
@@ -50,8 +62,8 @@
             android:id="@+id/tvAITimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#999999"
+            android:textSize="11sp"
+            android:textColor="@color/text_secondary"
             android:layout_marginTop="4dp"
             android:layout_gravity="end" />
 
