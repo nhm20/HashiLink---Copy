@@ -37,7 +37,8 @@ class BuyerHomeFragment : Fragment() {
                     true
                 }
                 R.id.nav_orders -> {
-                    // TODO: Load Orders fragment
+                    // Load Orders fragment
+                    loadFragment(OrdersFragment.newInstance())
                     true
                 }
                 R.id.nav_profile -> {

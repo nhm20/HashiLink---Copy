@@ -28,15 +28,6 @@
             </PendingDiffInfo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-              <option name="originalContent" value="&lt;resources&gt;&#10;    &lt;string name=&quot;app_name&quot;&gt;HashiLink&lt;/string&gt;&#10;    &lt;!-- TODO: Remove or change this placeholder text --&gt;&#10;    &lt;string name=&quot;hello_blank_fragment&quot;&gt;Hello blank fragment&lt;/string&gt;&#10;    &lt;string name=&quot;product_not_found&quot;&gt;Product not found&lt;/string&gt;&#10;&lt;/resources&gt;" />
-              <option name="updatedContent" value="&lt;resources&gt;&#10;    &lt;string name=&quot;app_name&quot;&gt;HashiLink&lt;/string&gt;&#10;    &lt;!-- TODO: Remove or change this placeholder text --&gt;&#10;    &lt;string name=&quot;hello_blank_fragment&quot;&gt;Hello blank fragment&lt;/string&gt;&#10;    &lt;string name=&quot;product_not_found&quot;&gt;Product not found&lt;/string&gt;&#10;    &lt;string name=&quot;product_price&quot;&gt;₹%1$.2f&lt;/string&gt;&#10;    &lt;string name=&quot;product_quantity&quot;&gt;Available Quantity: %1$d&lt;/string&gt;&#10;    &lt;string name=&quot;seller_id&quot;&gt;Seller ID: %1$s&lt;/string&gt;&#10;    &lt;string name=&quot;chat_with_seller&quot;&gt;Chat with Seller: %1$s&lt;/string&gt;&#10;    &lt;string name=&quot;message_format&quot;&gt;%1$s: %2$s&lt;/string&gt;&#10;&lt;/resources&gt;" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
       </map>
     </option>
   </component>

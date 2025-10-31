@@ -1,21 +1,26 @@
 package com.example.hashilink.ui.buyer
 
+    import android.app.AlertDialog
     import android.os.Bundle
     import android.view.LayoutInflater
     import android.view.View
     import android.view.ViewGroup
+    import android.widget.EditText
     import android.widget.ImageView
     import android.widget.TextView
     import android.widget.Toast
     import androidx.fragment.app.Fragment
+    import androidx.lifecycle.ViewModelProvider
     import com.bumptech.glide.Glide
     import com.example.hashilink.R
     import com.example.hashilink.data.model.Product
+    import com.example.hashilink.ui.viewmodel.OrderViewModel
     import com.google.android.material.button.MaterialButton
 
     class ProductDetailsFragment : Fragment() {
 
         private lateinit var product: Product
+        private lateinit var orderViewModel: OrderViewModel
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -33,6 +38,8 @@ package com.example.hashilink.ui.buyer
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
+
+            orderViewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
 
             val ivProductImage = view.findViewById<ImageView>(R.id.ivProductImage)
             val ivPlaceholder = view.findViewById<ImageView>(R.id.ivPlaceholder)
@@ -66,8 +73,20 @@ package com.example.hashilink.ui.buyer
             }
 
             btnBuy.setOnClickListener {
-                // TODO: Implement buy functionality
-                Toast.makeText(requireContext(), "Buy functionality not implemented yet", Toast.LENGTH_SHORT).show()
+                showBuyDialog()
+            }
+
+            // Observe order placement result
+            orderViewModel.placeOrderResult.observe(viewLifecycleOwner) { result ->
+                result.onSuccess { orderId ->
+                    android.util.Log.d("ProductDetails", "Order placed successfully with ID: $orderId")
+                    Toast.makeText(requireContext(), "Order placed successfully! Check Orders tab to view.", Toast.LENGTH_LONG).show()
+                    // Navigate back to home
+                    parentFragmentManager.popBackStack()
+                }.onFailure { ex ->
+                    android.util.Log.e("ProductDetails", "Failed to place order", ex)
+                    Toast.makeText(requireContext(), "Failed to place order: ${ex.message}", Toast.LENGTH_LONG).show()
+                }
             }
 
             btnChat.setOnClickListener {
@@ -83,6 +102,48 @@ package com.example.hashilink.ui.buyer
                     (parentFragment as? BuyerHomeFragment)?.loadFragment(chatFragment)
                 }
             }
+        }
+
+        private fun showBuyDialog() {
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_buy_product, null)
+            val etQuantity = dialogView.findViewById<EditText>(R.id.etQuantity)
+            val tvTotalPrice = dialogView.findViewById<TextView>(R.id.tvTotalPrice)
+
+            etQuantity.setText("1")
+            tvTotalPrice.text = "Total: ₹${product.price}"
+
+            etQuantity.setOnKeyListener { _, _, _ ->
+                val qty = etQuantity.text.toString().toIntOrNull() ?: 1
+                val total = product.price * qty
+                tvTotalPrice.text = "Total: ₹${"%.2f".format(total)}"
+                false
+            }
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("Buy ${product.name}")
+                .setView(dialogView)
+                .setPositiveButton("Confirm Purchase") { _, _ ->
+                    val quantity = etQuantity.text.toString().toIntOrNull() ?: 1
+                    if (quantity <= 0) {
+                        Toast.makeText(requireContext(), "Please enter a valid quantity", Toast.LENGTH_SHORT).show()
+                        return@setPositiveButton
+                    }
+                    if (quantity > product.quantity) {
+                        Toast.makeText(requireContext(), "Not enough stock available", Toast.LENGTH_SHORT).show()
+                        return@setPositiveButton
+                    }
+                    
+                    orderViewModel.placeOrder(
+                        productId = product.productId,
+                        productName = product.name,
+                        productPrice = product.price,
+                        productImageUrl = product.imageUrl,
+                        quantity = quantity,
+                        sellerId = product.sellerId
+                    )
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
 
         companion object {
