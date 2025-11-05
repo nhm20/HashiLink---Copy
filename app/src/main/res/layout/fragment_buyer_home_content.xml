@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_dark">
+    android:background="@color/background_light">
 
     <!-- Header Card -->
     <com.google.android.material.card.MaterialCardView
@@ -48,7 +48,7 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/surface_dark"
+        app:cardBackgroundColor="@color/surface_light"
         app:strokeColor="@color/accent_teal"
         app:strokeWidth="1dp">
 

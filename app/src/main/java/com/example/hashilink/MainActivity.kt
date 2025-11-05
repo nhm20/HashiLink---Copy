@@ -2,6 +2,7 @@ package com.example.hashilink
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.hashilink.data.model.User
 import com.example.hashilink.ui.auth.LoginFragment
@@ -14,6 +15,9 @@ class MainActivity : AppCompatActivity() {
     private var userRole: String = "buyer" // Default to buyer
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Force light mode - disable dark theme
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
