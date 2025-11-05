@@ -1,8 +1,18 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
             alias(libs.plugins.android.application)
             alias(libs.plugins.kotlin.android)
             id("kotlin-parcelize")
             alias(libs.plugins.google.gms.google.services)
+        }
+
+        // Load local.properties
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.inputStream().use { localProperties.load(it) }
         }
 
         android {
@@ -19,6 +29,12 @@ plugins {
                 versionName = "1.0"
 
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                
+                // Load Stripe keys from local.properties
+                buildConfigField("String", "STRIPE_PUBLISHABLE_KEY", 
+                    "\"${localProperties.getProperty("STRIPE_PUBLISHABLE_KEY", "")}\"")
+                buildConfigField("String", "STRIPE_SERVER_URL", 
+                    "\"${localProperties.getProperty("STRIPE_SERVER_URL", "http://10.0.2.2:3000")}\"")
             }
 
             buildTypes {
@@ -36,6 +52,9 @@ plugins {
             }
             kotlinOptions {
                 jvmTarget = "11"
+            }
+            buildFeatures {
+                buildConfig = true
             }
         }
 
@@ -58,6 +77,10 @@ plugins {
     // Cloudinary for image uploads
     implementation("com.cloudinary:cloudinary-android:3.1.2")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    
+    // Stripe payment gateway
+    implementation("com.stripe:stripe-android:20.37.0")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

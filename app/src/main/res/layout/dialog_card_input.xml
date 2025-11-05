@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Payment Details"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:paddingBottom="8dp"/>
+
+    <!-- Amount Display -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#F5F5F5"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount"
+                android:textSize="12sp"
+                android:textColor="#666666"/>
+
+            <TextView
+                android:id="@+id/tvPaymentAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹0.00"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/tvPaymentDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 item"
+                android:textSize="12sp"
+                android:textColor="#999999"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Card Input Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Card Details"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:paddingBottom="8dp"/>
+
+    <!-- Stripe Card Input Widget -->
+    <com.stripe.android.view.CardInputWidget
+        android:id="@+id/cardInputWidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Security Notice -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:background="#F0F9FF"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="🔒 Your payment is secure and encrypted"
+            android:textSize="12sp"
+            android:textColor="#1976D2"/>
+    </LinearLayout>
+
+    <!-- Test Card Info (for development) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvTestCardInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="#FFF3E0"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="0dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Test Card (Development Only)"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#E65100"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Card: 4242 4242 4242 4242\nExpiry: Any future date\nCVV: Any 3 digits"
+                android:textSize="10sp"
+                android:textColor="#E65100"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="#666666"/>
+
+        <Button
+            android:id="@+id/btnPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pay Now"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#1976D2"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

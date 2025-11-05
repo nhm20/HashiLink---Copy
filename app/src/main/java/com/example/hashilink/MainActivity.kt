@@ -50,6 +50,6 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameContainer, fragment)
-            .commit()
+            .commitAllowingStateLoss()
     }
 }

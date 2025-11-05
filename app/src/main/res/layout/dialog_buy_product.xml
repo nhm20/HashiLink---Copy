@@ -44,10 +44,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Note: This is a demo. No actual payment required."
+        android:text="Choose Payment Method"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="• Pay with Stripe - Process payment through Stripe gateway\n• Buy Without Payment - Demo mode (no actual payment)"
         android:textSize="12sp"
         android:textColor="@color/text_secondary"
-        android:textStyle="italic"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>

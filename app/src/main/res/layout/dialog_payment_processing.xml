@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <!-- Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:indeterminate="true"
+        style="@style/Widget.Material3.CircularProgressIndicator" />
+
+    <!-- Success Icon (Hidden initially, shown on success) -->
+    <TextView
+        android:id="@+id/ivStatusIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:visibility="gone"
+        android:text="✓"
+        android:textSize="48sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <!-- Status Message -->
+    <TextView
+        android:id="@+id/tvStatusMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Processing payment..."
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnSurface"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <!-- Sub Message -->
+    <TextView
+        android:id="@+id/tvSubMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Please wait, do not close the app"
+        android:textSize="14sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:gravity="center" />
+
+</LinearLayout>

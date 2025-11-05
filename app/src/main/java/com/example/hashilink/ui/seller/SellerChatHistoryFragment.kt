@@ -97,7 +97,9 @@ class SellerChatHistoryFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e(TAG, "Failed to load chat history: ${error.message}", error.toException())
-                Toast.makeText(requireContext(), "Failed to load chat history: ${error.message}", Toast.LENGTH_SHORT).show()
+                if (isAdded && context != null) {
+                    Toast.makeText(requireContext(), "Failed to load chat history: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
